@@ -8,7 +8,7 @@ from zope.sqlalchemy import mark_changed
 
 
 def get_FieldsByType(types, db, self):
-    return [item[0] for item in getNamesEditByColums(db, self.request.registry.settings['odk.repository']) if
+    return [item[0] for item in getNamesEditByColums(db, self.request.registry.settings['user.repository']) if
             item[2] in types]
 
 

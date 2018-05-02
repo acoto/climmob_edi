@@ -60,4 +60,4 @@ class myPrivateView(climmobPrivateView):
 
         return {'dataworking': dataworking, 'activeUser': self.user, 'getNamesEditByColums': getNamesEditByColums(proId,
                                                                                                                   self.request.registry.settings[
-                                                                                                                      'odk.repository'])}  # 'fill_table_n': fill_table_n(self,proId),
+                                                                                                                      'user.repository'])}  # 'fill_table_n': fill_table_n(self,proId),
