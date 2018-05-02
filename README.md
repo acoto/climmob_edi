@@ -6,7 +6,7 @@ Getting Started
 
 - Activate the Climmob environment.
 ```
-$ . ./path/to/ClimmobEnv/bin/activate
+$ . ./path/to/env/bin/activate
 ```
 
 - Change directory into your newly created plugin.
