@@ -1,0 +1,3 @@
+[climmob.plugins]
+EditData = EditData.plugin:EditData
+

@@ -1,0 +1,108 @@
+{% extends 'dashboard/dashboard.jinja2' %}
+
+
+
+{% block pagecontent %}
+
+    <!--edit by column-->
+    <div class="row animated fadeInRightBig">
+
+
+        <div class="ibox float-e-margins">
+
+            <div class="ibox-title">
+                <h5>Edit registry survey data</h5>
+            </div>
+
+            <div class="ibox-content">
+                <!---->
+                {% if not dataworking.data %}
+                    {% if getNamesEditByColums|length!=0 %}
+                        <small>Available fields for edit</small>
+                        <form name="editData" role="form" method="post" action="{{ request.path }}">
+                            <input type="hidden" name="csrf_token"
+                                   value="{{ request.session.get_csrf_token() }}">
+
+                            <div id="reg_ch" class="checkboxes ">
+                                <ul class="todo-list m-t">
+
+                                    {% for i in getNamesEditByColums %}
+                                        <!--<label>
+                                                <input class="i-checks" name="q_reg" type="checkbox" value="{{ i[0] }}$%*{{ i[1] }}" id="q_reg" checked="false">
+                                                {{ i[1] }}
+                                            </label> -->
+                                        <li>
+                                            <input type="checkbox" value="{{ i[0] }}$%*{{ i[1] }}$%*{{ i[2] }}" name="q_reg"
+                                                   class="i-checks" id="q_reg"/>
+                                            <span class="m-l-xs">{{ i[1] }}</span>
+
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <button class="btn btn-primary" type="submit" style="float: top;"
+                                    name='btn_EditData' id='btn_EditData'>{{ _('Edit') }}</button>
+
+                        </form>
+                    {% else %}
+                        <small>Error, No fields available for editing</small>
+                    {% endif %}
+
+
+                {% else %}
+                    <form id="jqEditTable" name="jqEditTable" role="form" method="post"
+                          action="{{ request.path }}">
+                        <input type="hidden" name="csrf_token"
+                               value="{{ request.session.get_csrf_token() }}">
+
+                        <div class="ibox-tools">
+                            <button class="btn btn-primary" type="submit" name="save_jq"
+                                    id="save_jq" disabled value="save">Save
+                                changes
+                            </button>
+                            <button class="btn btn-white " type="submit" name="cancel_jq"
+                                    id="cancel_jq" value="cancel">Cancel editing
+                            </button>
+                        </div>
+
+                        <div class="jqGrid_wrapper">
+                            <table id="jqGrid"></table>
+                            <div id="pager_list_2"></div>
+                        </div>
+
+                        <input type="hidden" id="json_data" name="json_data" value="">
+
+                    </form>
+
+                {% endif %}
+
+                <!---->
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    {% block javascript %}
+
+        <script type="text/javascript">
+            {% if dataworking.data %}
+                drawtable('{{dataworking.fill |safe}}');
+            {% endif%}
+            {% if dataworking.msg %}
+                msj(2);
+            {% endif %}
+            {% if dataworking.msg_flag ==1%}
+                msj(1);
+            {% endif %}
+            {% if dataworking.msg_flag ==0%}
+                msj(0);
+            {% endif %}
+
+        </script>
+    {% endblock %}
+{% endblock %}
+

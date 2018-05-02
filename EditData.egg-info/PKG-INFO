@@ -1,0 +1,49 @@
+Metadata-Version: 1.1
+Name: EditData
+Version: 1.0
+Summary: EditData
+Home-page: www.myserver.com
+Author: Myself
+Author-email: me@myserver.com
+License: UNKNOWN
+Description: EditData
+        ==============
+        
+        Getting Started
+        ---------------
+        
+        - Activate the Climmob environment.
+        ```
+        $ . ./path/to/ClimmobEnv/bin/activate
+        ```
+        
+        - Change directory into your newly created plugin.
+        ```
+        $ cd EditData
+        ```
+        
+        - Build the plugin
+        ```
+        $ python setup.py develop
+        ```
+        
+        - Add the plugin to the climmob list of plugins by editing the following line in development.ini or production.ini
+        ```
+            #climmob.plugins = examplePlugin
+            climmob.plugins = EditData
+        ```
+        
+        - Run Climmob again
+        
+        
+        1.0
+        ---
+        
+        - Initial version.
+        
+Keywords: climmob plugin
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Framework :: Pyramid
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application
