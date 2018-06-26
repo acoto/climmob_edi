@@ -58,7 +58,6 @@ class EditData(plugins.SingletonPlugin):
 
         #myCSS.append(u.addCSSResource('coreresources', 'jquery', 'inspinia/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css', 'fontawesome'))
         myCSS.append(u.addCSSResource('coreresources', 'jqgrid', 'inspinia/css/plugins/jqGrid/ui.jqgrid.css', 'jqueryui'))
-
         myCSS.append(u.addCSSResource('coreresources', 'sweet', 'inspinia/css/plugins/sweetalert/sweetalert.css', 'jqgrid'))
 
         return myCSS

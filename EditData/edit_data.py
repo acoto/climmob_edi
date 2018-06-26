@@ -25,20 +25,29 @@ def make_selOneOpt(self, bd, lkp_field):  # make value for select one and multip
 def getNamesEditByColums(db, odk_repository):  # create available list of columns for editing online
     # request.registry.settings['odktools.path']
     try:
-        file = odk_repository + "/" + db + '/odk/registry.xml'
+        file = odk_repository + "/" + db + '/odk/registry.xml' #requiere create.xml file from odktomysql
         tree = ET.parse(file)
-        columns = []  # var name, desc, type
+        columns = []  # var name, desc, type (rfield in selects)
 
-        for elem in tree.iter('{http://www.w3.org/2002/xforms}group'):
-            for g in elem.iter():
-                if g.tag.replace('{http://www.w3.org/2002/xforms}', '') in ['input', 'select1', 'select']:
-                    columns.append([g.attrib['ref'].split('/')[-1], g.find('{http://www.w3.org/2002/xforms}label').text])
+        for i, x in enumerate(tree.find("tables/table")):
+            row = []
+            if "odktype" in x.attrib:
+                if x.attrib["odktype"] not in ["barcode"]:
+                    row.append(x.attrib["name"])
+                    row.append(x.attrib["desc"])
+                    if "isMultiSelect" in x.attrib:
+                        row.append("select")
+                    elif "select_one" in x.attrib["odktype"].split(" ")[0]:
+                        row.append("select1")
+                        row.append(x.attrib["rtable"])
+                    elif x.attrib["odktype"] in ["integer"]:
+                        row.append("decimal")
+                    elif x.attrib["type"] in ["datetime"]:
+                        row.append("date")
+                    else:
+                        row.append("string")
 
-        for elem in tree.iter('{http://www.w3.org/2002/xforms}bind'):
-            if elem.attrib['nodeset'].split('/')[-1] != 'instanceID':
-                for i, col in enumerate(columns):
-                    if elem.attrib['nodeset'].split('/')[-1] == col[0]:
-                        col.append(elem.attrib['type'])
+                    columns.append(row[:])
         return columns
     except:
         return []
@@ -69,13 +78,13 @@ def fillDataTable(self, db, columns):
                 ret['colModel'].append(
                     {'align': 'center', 'label': col[1], 'name': col[0], 'index': col[0], 'editable': True,
                      "formatter": "select", 'edittype': "select",
-                     'editoptions': {'multiple': False, 'value': make_selOneOpt(self, db, col[0])}})
+                     'editoptions': {'multiple': False, 'value': make_selOneOpt(self, db, col[3])}})
             else:
                 if 'select' in col[2]:  # list select multiple
                     ret['colModel'].append(
                         {'align': 'center', 'label': col[1], 'name': col[0], 'index': col[0], 'editable': True,
                          "formatter": "select", 'edittype': "select",
-                         'editoptions': {'multiple': True, 'value': make_selOneOpt(self, db, col[0])}})
+                         'editoptions': {'multiple': True, 'value': make_selOneOpt(self, db, col[3])}})
                 else:
                     if 'decimal' in col[2] or 'int' == col[2]:  # integer values
                         ret['colModel'].append(
