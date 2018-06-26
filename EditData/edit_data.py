@@ -42,11 +42,13 @@ def getNamesEditByColums(db, odk_repository):  # create available list of column
                         row.append(x.attrib["rtable"])
                     elif x.attrib["odktype"] in ["integer"]:
                         row.append("decimal")
+                        row.append("")
                     elif x.attrib["type"] in ["datetime"]:
                         row.append("date")
+                        row.append("")
                     else:
                         row.append("string")
-
+                        row.append("")
                     columns.append(row[:])
         return columns
     except:
